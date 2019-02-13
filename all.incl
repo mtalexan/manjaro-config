@@ -1,0 +1,44 @@
+# The one file that can be included to get everything in this folder
+#
+# This file should be included in the .bashrc at the end of the file.
+#
+# Arguments:
+#  MY_TOOLS_DIR : The path to the directory this repo is in
+
+readonly LOCAL_PROFILES_DIR=${MY_TOOLS_DIR}/profile
+readonly LOCAL_REPOS_DIR=${MY_TOOLS_DIR}/repos
+export LOCAL_PROFILES_DIR LOCAL_REPOS_DIR
+source ${LOCAL_PROFILES_DIR}/git
+GTAGS_INSTALL_DIR=$(which gtags)
+if [ -z "${GTAGS_INSTALL_DIR}" ] ; then
+    # drop the file name and the bin directory name
+    GTAGS_INSTALL_DIR=$(dirname $(dirname ${GTAGS_INSTALL_DIR}))
+
+    source ${LOCAL_PROFILES_DIR}/emacs_gtags
+else
+    unset GTAGS_INSTALL_DIR
+fi
+source ${LOCAL_PROFILES_DIR}/sudo
+source ${LOCAL_PROFILES_DIR}/altera
+source ${LOCAL_PROFILES_DIR}/repos
+
+# set the prompt
+if ${use_color} ; then
+    if [[ ${EUID} == 0 ]] ; then
+        # show red root@ when running as root
+		PS1='\[\033[01;31m\][\u@\h\[\033[01;36m\] \W\[\033[01;31m\]]\$\[\033[00m\] '
+	else
+		PS1='\[\033[01;32m\][\[\033[01;37m\]\W\[\033[00m\]\[\033[1;33m\]$(__git_ps1)\[\033[00m\]\[\033[01;32m\]]\$\[\033[00m\] '
+	fi
+else
+    if [[ ${EUID} == 0 ]] ; then
+        # show root@ when we're running as root
+		PS1='\u@\h \W \$ '
+	else
+		PS1='[\w$(__git_ps1)]\$ '
+	fi
+fi
+
+# must be last
+source ${LOCAL_PROFILES_DIR}/alias_completion
+

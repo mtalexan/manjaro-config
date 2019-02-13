@@ -1,0 +1,6 @@
+[submodule "profile"]
+	path = profile
+	url = https://github.com/mtalexan/bash-profile
+[submodule "repos"]
+	path = repos
+	url = https://github.com/mtalexan/modular-scripts.git

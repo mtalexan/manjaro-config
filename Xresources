@@ -123,7 +123,7 @@ URxvt.keysym.Shift-Control-k:  \033[1;6B
 ! URxvt*scrollTtyOutput:            boolean
 URxvt*scrollTtyOutput:            false
 ! URxvt*scrollTtyKeypress:          boolean
-URxvt*scrollTtyKeypress:          ture
+URxvt*scrollTtyKeypress:          true
 ! URxvt*scrollWithBuffer:           boolean
 ! URxvt*tintColor:                  !7DA55
 ! URxvt*blurRadius:                 HxV

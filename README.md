@@ -6,7 +6,7 @@ Configuration files can be compared, or blindly symlinked by running the config_
 Add the following lines to the end of your .bashrc to get additional functionality.
 
 ```
-MY_TOOLS_DIR=${HOME}/manjaro-config
+export MY_TOOLS_DIR=${HOME}/manjaro-config
 source ${MY_TOOLS_DIR}/all.incl
 ```
 

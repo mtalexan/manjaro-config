@@ -41,6 +41,7 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec terminal
 bindsym $mod+F1 exec terminal
+bindsym $mod+Shift+F1 exec --no-startup-id ~/manjaro-config/exec-on-new-workspace.sh terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -70,12 +71,22 @@ bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
 
 # Start Applications
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
+bindsym $mod+Shift+Ctrl+b exec terminal -e 'bmenu'
+#bindsym $mod+F2 exec --no-startup-id ~/manjaro-config/exec-on-new-workspace.sh firefox
 bindsym $mod+F2 exec firefox
-bindsym $mod+F3 exec google-chrome-stable
+bindsym $mod+Shift+F2 exec firefox
+#bindsym $mod+F3 exec --no-startup-id ~/manjaro-config/exec-on-new-workspace.sh google-chrome-stable
+bindsym $mod+F3 exec  google-chrome-stable
+bindsym $mod+Shift+F3 exec google-chrome-stable
+#bindsym $mod+F4 exec --no-startup-id ~/manjaro-config/exec-on-new-workspace.sh pcmanfm
 bindsym $mod+F4 exec pcmanfm
+#bindsym $mod+Shift+F4 exec gksu pcmanfm
+bindsym $mod+Shift+F4 exec pcmanfm
 # bindsym $mod+F3 exec ranger
-bindsym $mod+Shift+F4 exec gksu pcmanfm
+# bindsym $mod+Shift+F3 exec ranger
+#bindsym $mod+F5 exec --no-startup-id ~/manjaro-config/exec-on-new-workspace.sh terminal -e 'mocp'
 bindsym $mod+F5 exec terminal -e 'mocp'
+bindsym $mod+Shift+F5 exec terminal -e 'mocp'
 bindsym $mod+t exec --no-startup-id pkill compton
 bindsym $mod+Ctrl+t exec --no-startup-id compton -b
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
@@ -100,7 +111,7 @@ bindsym $mod+$ergo_right focus right
 #bindsym $mod+semicolon focus right
 
 # easyfocus/avy/ace mode visible window selection
-bindsym $mod+semicolon $easyfocus
+bindsym $mod+semicolon exec $easyfocus
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -231,7 +242,7 @@ for_window [title="MuseScore: Play Panel"] floating enable
 for_window [class="Nitrogen"] floating enable sticky enable border normal
 for_window [class="Oblogout"] fullscreen enable
 for_window [class="octopi"] floating enable
-for_window [title="About Pale Moon"] floating enable
+for_window [title="About Pale Moon"] floating enable border pixel 1
 for_window [class="Pamac-manager"] floating enable
 for_window [class="Pavucontrol"] floating enable
 for_window [class="qt5ct"] floating enable sticky enable border normal
@@ -242,9 +253,9 @@ for_window [class="Skype"] floating enable border normal
 for_window [class="Timeset-gui"] floating enable border normal
 for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="Xfburn"] floating enable
-for_window [class="Steam"] floating enable border normal
-for_window [class="Firefox"] floating enable border normal
-for_window [class="Chrome"] floating enable border normal
+for_window [class="Steam"] floating enable border pixel 1
+for_window [class="Firefox"] border pixel 1
+for_window [class="Chrome"] border pixel 1
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
@@ -478,9 +489,9 @@ bindsym $mod+Ctrl+r mode "move"
 #}
 
 # Lock screen
-#bindsym $mod+9 exec --no-startup-id blurlock
+bindsym $mod+9 exec --no-startup-id blurlock
 #bindsym $mod+9 exec --no-startup-id xscreensaver-command -lock
-bindsym $mod+9 exec --no-startup-id light-locker-command --lock
+#bindsym $mod+9 exec --no-startup-id light-locker-command --lock
 
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
@@ -494,9 +505,9 @@ exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb
 exec --no-startup-id start_conky_maia
 # exec --no-startup-id start_conky_green
-# exec --no-startup-id xautolock -time 10 -locker blurlock
+exec --no-startup-id xautolock -time 10 -locker blurlock
 # exec --no-startup-id xscreensaver -nosplash
-exec --no-startup-id light-locker --no-late-locking --lock-on-suspend --lock-on-lid --idle-hint
+# exec --no-startup-id light-locker --no-late-locking --lock-on-suspend --lock-on-lid --idle-hint
 exec --no-startup-id "if command -v vmware-user-suid-wrapper &>/dev/null ; then vmware-user-suid-wrapper ; fi"
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor

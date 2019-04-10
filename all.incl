@@ -9,6 +9,7 @@ readonly LOCAL_PROFILES_DIR=${MY_TOOLS_DIR}/profile
 readonly LOCAL_REPOS_DIR=${MY_TOOLS_DIR}/repos
 export LOCAL_PROFILES_DIR LOCAL_REPOS_DIR
 source ${LOCAL_PROFILES_DIR}/git
+source ${LOCAL_PROFILES_DIR}/emacs_simple_editor_setup
 GTAGS_INSTALL_DIR=$(which gtags)
 if [ -z "${GTAGS_INSTALL_DIR}" ] ; then
     # drop the file name and the bin directory name

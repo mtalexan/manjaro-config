@@ -256,6 +256,7 @@ for_window [class="Xfburn"] floating enable
 for_window [class="Steam"] floating enable border pixel 1
 for_window [class="Firefox"] border pixel 1
 for_window [class="Chrome"] border pixel 1
+for_window [instance="(?i)^copyq$" class="(?i)^Copyq$"] floating enable border pixel 0
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus

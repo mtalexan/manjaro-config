@@ -76,8 +76,10 @@ bindsym $mod+Shift+Ctrl+b exec terminal -e 'bmenu'
 bindsym $mod+F2 exec firefox
 bindsym $mod+Shift+F2 exec firefox
 #bindsym $mod+F3 exec --no-startup-id ~/manjaro-config/exec-on-new-workspace.sh google-chrome-stable
-bindsym $mod+F3 exec  google-chrome-stable
-bindsym $mod+Shift+F3 exec google-chrome-stable
+#bindsym $mod+F3 exec  google-chrome-stable
+#bindsym $mod+Shift+F3 exec google-chrome-stable
+bindsym $mod+F3 exec  chromium
+bindsym $mod+Shift+F3 exec chromium
 #bindsym $mod+F4 exec --no-startup-id ~/manjaro-config/exec-on-new-workspace.sh pcmanfm
 bindsym $mod+F4 exec pcmanfm
 #bindsym $mod+Shift+F4 exec gksu pcmanfm

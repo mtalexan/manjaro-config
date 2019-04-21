@@ -40,6 +40,12 @@ else
 	fi
 fi
 
+# set the pager, have it passthru ASCII color codes
+export PAGER="less -R"
+
+if [ -n "$USE_POWERLINE" ] ; then
+  source ${MY_TOOLS_DIR}/powerline.incl
+fi
+
 # must be last
 source ${LOCAL_PROFILES_DIR}/alias_completion
-

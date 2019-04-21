@@ -44,6 +44,10 @@ antigen bundle colored-man-pages
 antigen bundle colorize
 antigen bundle emacs
 antigen bundle git-extras
+antigen bundle gpg-agent
+antigen bundle ripgrep
+antigen bundle urltools
+antigen bundle zsh-navigation-tools
 
 antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-syntax-highlighting
@@ -52,7 +56,11 @@ ZSH_AUTOSUGGEST_STRATEGY=(history)
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 antigen bundle zsh-users/zsh-autosuggestions
 
-source ~/manjajaro-config/zsh-config/powerlevel10k.config
+antigen bundle djui/alias-tips
+antigen bundle unixorn/autoupdate-antigen.zshplugin
+antigen bundle joel-porquet/zsh-dircolors-solarized.git
+
+source ~/manjaro-config/zsh-config/powerlevel10k.config
 # hide 'context' segment when username matches this
 DEFAULT_USER=aaravchen
 
@@ -66,4 +74,4 @@ antigen apply
 # oh-my-zsh bindings
 
 # Last so it overrides any other key settings
-source ~/manajaro-config/zsh-config/keys.config
+source ~/manjaro-config/zsh-config/keys.config

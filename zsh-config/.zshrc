@@ -34,7 +34,16 @@ setopt appendhistory extendedglob nomatch notify
 unsetopt autocd
 # End of lines configured by zsh-newuser-install
 
-source /usr/share/zsh/share/antigen.zsh 
+if [ -e /usr/share/zsh/share/antigen.zsh ] ; then
+    # Manjaro
+    source /usr/share/zsh/share/antigen.zsh
+elif [ -e ~/manjaro-config/zsh-config/antigen.zsh ] ; then
+    # Ubuntu is absurdly old, don't use the apt-get version
+    source ~/manjaro-config/zsh-config/antigen.zsh
+else
+    echo "ERROR: Missing antigen"
+    exit 1
+fi
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
@@ -44,7 +53,6 @@ antigen bundle colored-man-pages
 antigen bundle colorize
 antigen bundle emacs
 antigen bundle git-extras
-antigen bundle gpg-agent
 antigen bundle ripgrep
 antigen bundle urltools
 antigen bundle zsh-navigation-tools
@@ -64,8 +72,8 @@ source ~/manjaro-config/zsh-config/powerlevel10k.config
 # hide 'context' segment when username matches this
 DEFAULT_USER=aaravchen
 
-antigen theme romkatv/powerlevel10k
-#antigen theme robbyrussell
+#antigen theme romkatv/powerlevel10k
+antigen theme robbyrussell
 
 # must be last
 antigen apply

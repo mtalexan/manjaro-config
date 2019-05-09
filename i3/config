@@ -66,8 +66,8 @@ bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
 ################################################################################################
 
 # Screen brightness controls
-# bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
-# bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
+# bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send --urgency=normal --expire-time=1000 'brightness up'"
+# bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send --urgency=normal --expire-time=1000 'brightness down'"
 
 # Start Applications
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
@@ -91,7 +91,7 @@ bindsym $mod+F5 exec terminal -e 'mocp'
 bindsym $mod+Shift+F5 exec terminal -e 'mocp'
 bindsym $mod+t exec --no-startup-id pkill compton
 bindsym $mod+Ctrl+t exec --no-startup-id compton -b
-bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
+bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send --urgency=normal --expire-time=3000 'restart dunst'"
 bindsym Print exec --no-startup-id i3-scrot
 bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
 bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
@@ -144,17 +144,17 @@ bindsym $mod+b workspace back_and_forth
 bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
 
 # split orientation
-bindsym $mod+h split h;exec notify-send 'tile horizontally'
-bindsym $mod+v split v;exec notify-send 'tile vertically'
+bindsym $mod+h split h;exec notify-send --urgency=low --expire-time=1000 'tile horizontally'
+bindsym $mod+v split v;exec notify-send --urgency=low --expire-time=1000 'tile vertically'
 bindsym $mod+q split toggle
 
 # toggle fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $mod+s layout stacking;exec notify-send --urgency=normal --expire-time=4000 'stacking | e: split | w: tabbed | s: stacking'
+bindsym $mod+w layout tabbed;exec notify-send --urgency=normal --expire-time=4000 'tabbed | e: split | w: tabbed | s: stacking'
+bindsym $mod+e layout toggle split;exec notify-send --urgency=normal --expire-time=4000 'split | e: split | w: tabbed | s: stacking'
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle

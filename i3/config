@@ -12,28 +12,49 @@ set $ergo_down k
 set $ergo_up i
 set $ergo_right l
 
-
+# quickswitch-i3 command with path, arguments should be appended
+set $quickswitch quickswitch.py
 # i3-easyfocus command with path, arguments or piping for operations on the selected window should be appended
-set $easyfocus "i3-easyfocus --font terminus-pt154-bold-32 --all --keys avy"
+set $easyfocus i3-easyfocus --font terminus-pt154-bold-32 --all --keys avy
 
 # set default desktop layout (default is tiling)
 # workspace_layout tabbed <stacking|tabbed>
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
-new_window normal
+new_window pixel 1
 new_float normal
+# the new way to do this same thing
+default_border pixel 1
+default_floating_border normal
 
 # Hide borders (can also be smart_no_gaps to hide only on single window)
-#hide_edge_borders none
+hide_edge_borders smart_no_gaps
 
 # change borders
 #bindsym $mod+u border none
-#bindsym $mod+y border pixel 1
-#bindsym $mod+n border normal
+#bindsym $mod+n border pixel 1
+bindsym $mod+Shift+t border toggle
+# prompt for input to change the title
+bindsym $mod+t exec i3-input -F 'title_format "%s"' -P 'New title: '
+
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font xft:URWGothic-Book 11
+#font pango:xos4 Terminus bold 9
+#font xft:URWGothic-Book 9
+font FontAwesome 8,pango:monospace 8
+
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+#font pango:DejaVu Sans Mono 8
+
+# Before i3 v4.8, we used to recommend this one as the default:
+# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+# The font above is very space-efficient, that is, it looks good, sharp and
+# clear in small sizes. However, its unicode glyph coverage is limited, the old
+# X core fonts rendering does not support right-to-left and this being a bitmap
+# font, it doesn’t scale on retina/hidpi displays.
+
 
 # Use Mouse+$mod to drag floating windows
 floating_modifier $mod
@@ -89,16 +110,16 @@ bindsym $mod+Shift+F4 exec pcmanfm
 #bindsym $mod+F5 exec --no-startup-id ~/manjaro-config/exec-on-new-workspace.sh terminal -e 'mocp'
 bindsym $mod+F5 exec terminal -e 'mocp'
 bindsym $mod+Shift+F5 exec terminal -e 'mocp'
-bindsym $mod+t exec --no-startup-id pkill compton
-bindsym $mod+Ctrl+t exec --no-startup-id compton -b
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send --urgency=normal --expire-time=3000 'restart dunst'"
+bindsym $altmod+Print --release exec --no-startup-id flameshot gui
 bindsym Print exec --no-startup-id i3-scrot
 bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
 bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
 bindsym $mod+Shift+h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
-# focus_follows_mouse no
+# Don't follow the mouse, it's how we lose urgent pop ups
+focus_follows_mouse no
 
 # change focus
 # change focus -- ergo keys
@@ -121,7 +142,7 @@ bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
-# move focused window
+# move focused window in tree -- ergo keys
 bindsym $mod+Shift+$ergo_left move left
 bindsym $mod+Shift+$ergo_down move down
 bindsym $mod+Shift+$ergo_up move up
@@ -142,6 +163,9 @@ bindsym $mod+Shift+Right move right
 workspace_auto_back_and_forth yes
 bindsym $mod+b workspace back_and_forth
 bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
+
+# Display urgent notifications on windows
+force_display_urgency_hint 500 ms
 
 # split orientation
 bindsym $mod+h split h;exec notify-send --urgency=low --expire-time=1000 'tile horizontally'
@@ -168,6 +192,7 @@ bindsym $mod+Shift+s sticky toggle
 # focus the parent container
 bindsym $mod+a focus parent
 
+# Hide floating windows on a secret workspace
 # move the currently focused window to the scratchpad
 bindsym $mod+Shift+minus move scratchpad
 
@@ -191,6 +216,8 @@ set $ws5 5
 set $ws6 6
 set $ws7 7
 set $ws8 8
+set $ws9 9
+set $ws10 10
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -201,6 +228,10 @@ bindsym $mod+5 workspace $ws5
 bindsym $mod+6 workspace $ws6
 bindsym $mod+7 workspace $ws7
 bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+# picked from a prompt
+bindsym $mod+grave exec $quickswitch --workspaces --prompt
 
 # Move focused container to workspace
 bindsym $mod+Ctrl+1 move container to workspace $ws1
@@ -211,6 +242,10 @@ bindsym $mod+Ctrl+5 move container to workspace $ws5
 bindsym $mod+Ctrl+6 move container to workspace $ws6
 bindsym $mod+Ctrl+7 move container to workspace $ws7
 bindsym $mod+Ctrl+8 move container to workspace $ws8
+bindsym $mod+Ctrl+9 move container to workspace $ws9
+bindsym $mod+Ctrl+0 move container to workspace $ws10
+# entered manually at a prompt
+bindsym $mod+Ctrl+grave exec i3-input -F 'move container to workspace "%s"' -P "Move to workspace: "
 
 # Move to workspace with focused container
 bindsym $mod+Ctrl+Shift+1 move container to workspace $ws1; workspace $ws1
@@ -221,6 +256,11 @@ bindsym $mod+Ctrl+Shift+5 move container to workspace $ws5; workspace $ws5
 bindsym $mod+Ctrl+Shift+6 move container to workspace $ws6; workspace $ws6
 bindsym $mod+Ctrl+Shift+7 move container to workspace $ws7; workspace $ws7
 bindsym $mod+Ctrl+Shift+8 move container to workspace $ws8; workspace $ws8
+bindsym $mod+Ctrl+Shift+9 move container to workspace $ws8; workspace $ws9
+bindsym $mod+Ctrl+Shift+0 move container to workspace $ws10; workspace $ws10
+# picked from a prompt
+bindsym $mod+Ctrl+Shift+grave exec $quickswitch --journey --follow --prompt
+
 
 # Open applications on specific workspaces
 # assign [class="Thunderbird"] $ws1
@@ -228,37 +268,41 @@ bindsym $mod+Ctrl+Shift+8 move container to workspace $ws8; workspace $ws8
 # assign [class="Pcmanfm"] $ws3
 # assign [class="Skype"] $ws5
 
+# floating dialogs
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+
 # Open specific applications in floating mode
 for_window [title="alsamixer"] floating enable border pixel 1
 for_window [class="calamares"] floating enable border normal
-for_window [class="Clipgrab"] floating enable
-for_window [title="File Transfer*"] floating enable
+for_window [class="Clipgrab"] floating enable border pixel 1
+for_window [title="File Transfer*"] floating enable  border normal
 for_window [class="Galculator"] floating enable border pixel 1
 for_window [class="GParted"] floating enable border normal
 for_window [title="i3_help"] floating enable sticky enable border normal
-for_window [class="Lightdm-settings"] floating enable
+for_window [class="Lightdm-settings"] floating enable border pixel 1
 for_window [class="Lxappearance"] floating enable sticky enable border normal
 for_window [class="Manjaro-hello"] floating enable
 for_window [class="Manjaro Settings Manager"] floating enable border normal
-for_window [title="MuseScore: Play Panel"] floating enable
+for_window [title="MuseScore: Play Panel"] floating enable border pixel 1
 for_window [class="Nitrogen"] floating enable sticky enable border normal
 for_window [class="Oblogout"] fullscreen enable
-for_window [class="octopi"] floating enable
+for_window [class="octopi"] floating enable border normal
 for_window [title="About Pale Moon"] floating enable border pixel 1
-for_window [class="Pamac-manager"] floating enable
-for_window [class="Pavucontrol"] floating enable
+for_window [class="Pamac-manager"] floating enable border pixel 1
+for_window [class="Pavucontrol"] floating enable border normal
 for_window [class="qt5ct"] floating enable sticky enable border normal
 for_window [class="Qtconfig-qt4"] floating enable sticky enable border normal
 for_window [class="Simple-scan"] floating enable border normal
 for_window [class="(?i)System-config-printer.py"] floating enable border normal
-for_window [class="Skype"] floating enable border normal
+for_window [class="Skype"] floating enable border pixel 1
 for_window [class="Timeset-gui"] floating enable border normal
-for_window [class="(?i)virtualbox"] floating enable border normal
-for_window [class="Xfburn"] floating enable
+for_window [class="(?i)virtualbox"] floating enable border pixel 1
+for_window [class="Xfburn"] floating enable border normal
 for_window [class="Steam"] floating enable border pixel 1
 for_window [class="Firefox"] border pixel 1
 for_window [class="Chrome"] border pixel 1
-for_window [instance="(?i)^copyq$" class="(?i)^Copyq$"] floating enable border pixel 0
+for_window [instance="(?i)^copyq$" class="(?i)^Copyq$"] floating enable border pixel 1
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
@@ -270,24 +314,36 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+#bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # Set shut down, restart and locking features
-bindsym $mod+0 mode "$mode_system"
+bindsym $mod+Shift+e mode "$mode_system"
+
+set $Locker i3lock -d -c $black0 -f
 set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
+
 mode "$mode_system" {
-    bindsym l exec --no-startup-id i3exit lock, mode "default"
-    bindsym s exec --no-startup-id i3exit suspend, mode "default"
-    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
-    bindsym e exec --no-startup-id i3exit logout, mode "default"
-    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
-    bindsym r exec --no-startup-id i3exit reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+    #bindsym l exec --no-startup-id i3exit lock, mode "default"
+    bindsym l exec --no-startup-id $Locker, mode "default"
+    #bindsym s exec --no-startup-id i3exit suspend, mode "default"
+    bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
+    #bindsym u exec --no-startup-id i3exit switch_user, mode "default"
+    bindsym u exec --no-startup-id dm-tool switch-to-greeter, mode "default"
+    #bindsym e exec --no-startup-id i3exit logout, mode "default"
+    bindsym e exec --no-startup-id i3msg exit, mode "default"
+    #bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+    bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
+    #bindsym r exec --no-startup-id i3exit reboot, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    #bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
 
     # exit system mode: "Enter" or "Escape"
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
+
+bindsym $altmod+Ctrl+Delete $Locker
 
 # resize window (you can also use the mouse for that)
 # Copied in "move" with Ctrl key inverted for move vs resize
@@ -297,48 +353,48 @@ mode "resize" {
         # Moves when holding Ctrl, fast-changes when holding Ctrl+Shift
 
         # Resize a little, fixed upper-left corner
-        bindsym $ergo_left resize shrink width 10 px
-        bindsym $ergo_down resize grow height 10 px
-        bindsym $ergo_up resize shrink height 10 px
-        bindsym $ergo_right resize grow width 10 px
+        bindsym $ergo_left resize shrink width 10 px or 10 ppt
+        bindsym $ergo_down resize grow height 10 px or 10 ppt
+        bindsym $ergo_up resize shrink height 10 px or 10 ppt
+        bindsym $ergo_right resize grow width 10 px or 10 ppt
 
-        bindsym Left resize shrink width 10 px
-        bindsym Down resize grow height 10 px
-        bindsym Up resize shrink height 10 px
-        bindsym Right resize grow width 10 px
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
 
         # Resize fast, fixed upper-left corner
-        bindsym Shift+$ergo_left resize shrink width 40 px
-        bindsym Shift+$ergo_down resize grow height 40 px
-        bindsym Shift+$ergo_up resize shrink height 40 px
-        bindsym Shift+$ergo_right resize grow width 40 px
+        bindsym Shift+$ergo_left resize shrink width 40 px or 40 ppt
+        bindsym Shift+$ergo_down resize grow height 40 px or 40 ppt
+        bindsym Shift+$ergo_up resize shrink height 40 px or 40 ppt
+        bindsym Shift+$ergo_right resize grow width 40 px or 40 ppt
 
-        bindsym Shift+Left resize shrink width 40 px
-        bindsym Shift+Down resize grow height 40 px
-        bindsym Shift+Up resize shrink height 40 px
-        bindsym Shift+Right resize grow width 40 px
+        bindsym Shift+Left resize shrink width 40 px or 40 ppt
+        bindsym Shift+Down resize grow height 40 px or 40 ppt
+        bindsym Shift+Up resize shrink height 40 px or 40 ppt
+        bindsym Shift+Right resize grow width 40 px or 40 ppt
 
         # Move a little, fixed size
-        bindsym Ctrl+$ergo_left move left 10 px
-        bindsym Ctrl+$ergo_down move down 10 px
-        bindsym Ctrl+$ergo_up move up 10 px
-        bindsym Ctrl+$ergo_right move right 10 px
+        bindsym Ctrl+$ergo_left move left 10 px or 10 ppt
+        bindsym Ctrl+$ergo_down move down 10 px or 10 ppt
+        bindsym Ctrl+$ergo_up move up 10 px or 10 ppt
+        bindsym Ctrl+$ergo_right move right 10 px or 10 ppt
 
-        bindsym Ctrl+Left move left 10 px
-        bindsym Ctrl+Down move down 10 px
-        bindsym Ctrl+Up move up 10 px
-        bindsym Ctrl+Right move right 10 px
+        bindsym Ctrl+Left move left 10 px or 10 ppt
+        bindsym Ctrl+Down move down 10 px or 10 ppt
+        bindsym Ctrl+Up move up 10 px or 10 ppt
+        bindsym Ctrl+Right move right 10 px or 10 ppt
 
         # Move a lot, fixed size  (useful in floating mode)
-        bindsym Ctrl+Shift+$ergo_left move left 40 px
-        bindsym Ctrl+Shift+$ergo_down move down 40 px
-        bindsym Ctrl+Shift+$ergo_up move up 40 px
-        bindsym Ctrl+Shift+$ergo_right move right 40 px
+        bindsym Ctrl+Shift+$ergo_left move left 40 px or 40 ppt
+        bindsym Ctrl+Shift+$ergo_down move down 40 px or 40 ppt
+        bindsym Ctrl+Shift+$ergo_up move up 40 px or 40 ppt
+        bindsym Ctrl+Shift+$ergo_right move right 40 px or 40 ppt
 
-        bindsym Ctrl+Shift+Left move left 40 px
-        bindsym Ctrl+Shift+Down move down 40 px
-        bindsym Ctrl+Shift+Up move up 40 px
-        bindsym Ctrl+Shift+Right move right 40 px
+        bindsym Ctrl+Shift+Left move left 40 px or 40 ppt
+        bindsym Ctrl+Shift+Down move down 40 px or 40 ppt
+        bindsym Ctrl+Shift+Up move up 40 px or 40 ppt
+        bindsym Ctrl+Shift+Right move right 40 px or 40 ppt
 
         # tiling layout switching
         bindsym s layout stacking
@@ -384,48 +440,48 @@ mode "move" {
         # Change size when holding Ctrl, fast-changes when holding Ctrl+Shift
 
         # Resize a little, fixed upper-left corner
-        bindsym Ctrl+$ergo_left resize shrink width 10 px
-        bindsym Ctrl+$ergo_down resize grow height 10 px
-        bindsym Ctrl+$ergo_up resize shrink height 10 px
-        bindsym Ctrl+$ergo_right resize grow width 10 px
+        bindsym Ctrl+$ergo_left resize shrink width 10 px or 10 ppt
+        bindsym Ctrl+$ergo_down resize grow height 10 px or 10 ppt
+        bindsym Ctrl+$ergo_up resize shrink height 10 px or 10 ppt
+        bindsym Ctrl+$ergo_right resize grow width 10 px or 10 ppt
 
-        bindsym Ctrl+Left resize shrink width 10 px
-        bindsym Ctrl+Down resize grow height 10 px
-        bindsym Ctrl+Up resize shrink height 10 px
-        bindsym Ctrl+Right resize grow width 10 px
+        bindsym Ctrl+Left resize shrink width 10 px or 10 ppt
+        bindsym Ctrl+Down resize grow height 10 px or 10 ppt
+        bindsym Ctrl+Up resize shrink height 10 px or 10 ppt
+        bindsym Ctrl+Right resize grow width 10 px or 10 ppt
 
         # Resize fast, fixed upper-left corner
-        bindsym Ctrl+Shift+$ergo_left resize shrink width 40 px
-        bindsym Ctrl+Shift+$ergo_down resize grow height 40 px
-        bindsym Ctrl+Shift+$ergo_up resize shrink height 40 px
-        bindsym Ctrl+Shift+$ergo_right resize grow width 40 px
+        bindsym Ctrl+Shift+$ergo_left resize shrink width 40 px or 40 ppt
+        bindsym Ctrl+Shift+$ergo_down resize grow height 40 px or 40 ppt
+        bindsym Ctrl+Shift+$ergo_up resize shrink height 40 px or 40 ppt
+        bindsym Ctrl+Shift+$ergo_right resize grow width 40 px or 40 ppt
 
-        bindsym Ctrl+Shift+Left resize shrink width 40 px
-        bindsym Ctrl+Shift+Down resize grow height 40 px
-        bindsym Ctrl+Shift+Up resize shrink height 40 px
-        bindsym Ctrl+Shift+Right resize grow width 40 px
+        bindsym Ctrl+Shift+Left resize shrink width 40 px or 40 ppt
+        bindsym Ctrl+Shift+Down resize grow height 40 px or 40 ppt
+        bindsym Ctrl+Shift+Up resize shrink height 40 px or 40 ppt
+        bindsym Ctrl+Shift+Right resize grow width 40 px or 40 ppt
 
         # Move a little, fixed size
-        bindsym $ergo_left move left 10 px
-        bindsym $ergo_down move down 10 px
-        bindsym $ergo_up move up 10 px
-        bindsym $ergo_right move right 10 px
+        bindsym $ergo_left move left 10 px or 10 ppt
+        bindsym $ergo_down move down 10 px or 10 ppt
+        bindsym $ergo_up move up 10 px or 10 ppt
+        bindsym $ergo_right move right 10 px or 10 ppt
 
-        bindsym Left move left 10 px
-        bindsym Down move down 10 px
-        bindsym Up move up 10 px
-        bindsym Right move right 10 px
+        bindsym Left move left 10 px or 10 ppt
+        bindsym Down move down 10 px or 10 ppt
+        bindsym Up move up 10 px or 10 ppt
+        bindsym Right move right 10 px or 10 ppt
 
         # Move a lot, fixed size (useful in floating mode)
-        bindsym Shift+$ergo_left move left 40 px
-        bindsym Shift+$ergo_down move down 40 px
-        bindsym Shift+$ergo_up move up 40 px
-        bindsym Shift+$ergo_right move right 40 px
+        bindsym Shift+$ergo_left move left 40 px or 40 ppt
+        bindsym Shift+$ergo_down move down 40 px or 40 ppt
+        bindsym Shift+$ergo_up move up 40 px or 40 ppt
+        bindsym Shift+$ergo_right move right 40 px or 40 ppt
 
-        bindsym Shift+Left move left 40 px
-        bindsym Shift+Down move down 40 px
-        bindsym Shift+Up move up 40 px
-        bindsym Shift+Right move right 40 px
+        bindsym Shift+Left move left 40 px or 40 ppt
+        bindsym Shift+Down move down 40 px or 40 ppt
+        bindsym Shift+Up move up 40 px or 40 ppt
+        bindsym Shift+Right move right 40 px or 40 ppt
 
         # tiling layout switching
         bindsym s layout stacking
@@ -492,7 +548,7 @@ bindsym $mod+Ctrl+r mode "move"
 #}
 
 # Lock screen
-bindsym $mod+9 exec --no-startup-id blurlock
+#bindsym $mod+9 exec --no-startup-id blurlock
 #bindsym $mod+9 exec --no-startup-id xscreensaver-command -lock
 #bindsym $mod+9 exec --no-startup-id light-locker-command --lock
 
@@ -503,14 +559,14 @@ exec --no-startup-id nitrogen --restore; sleep 1; compton -b
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
-exec --no-startup-id clipit
+exec --no-startup-id copyq
 exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb
 exec --no-startup-id start_conky_maia
 # exec --no-startup-id start_conky_green
-exec --no-startup-id xautolock -time 10 -locker blurlock
-# exec --no-startup-id xscreensaver -nosplash
-# exec --no-startup-id light-locker --no-late-locking --lock-on-suspend --lock-on-lid --idle-hint
+#exec --no-startup-id xautolock -time 10 -locker blurlock
+exec --no-startup-id xscreensaver -nosplash
+#exec --no-startup-id light-locker --no-late-locking --lock-on-suspend --lock-on-lid --idle-hint
 exec --no-startup-id "if command -v vmware-user-suid-wrapper &>/dev/null ; then vmware-user-suid-wrapper ; fi"
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
@@ -552,17 +608,26 @@ bar {
 	status_command i3status
 	position bottom
 
+	# laptop isn't identifying this display as the primary, so use it as default
+	# if present, then fallback to "primary"
+	#tray_output LVDS-1-1
+	#tray_output primary
+
 ## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
 #	tray_output primary
 #	tray_output eDP1
 
 	bindsym button4 nop
 	bindsym button5 nop
-#   font xft:URWGothic-Book 11
+	font pango:FontAwesome 8,monospace 8
 
-    workspace_buttons yes
+
+	# Full sized icons in tray. positive numbers reduce icon size
+	tray_padding 0
+
+	workspace_buttons yes
 	strip_workspace_numbers no
-    binding_mode_indicator yes
+	binding_mode_indicator yes
 
     colors {
         background #222D31

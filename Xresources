@@ -135,11 +135,11 @@ Xcursor.size:                     0
 
 ! This font gets inherited by emacs, which does n0t support xft.  So we must specify
 ! the classes it applies to specifically
-URxvt*font:                       xft:Fira Mono for Powerline:style=Medium:pixelsize=12,xft:Inconsolata:size=12,9x15
+URxvt*font:                       xft:DejaVu Sans Mono for Powerline:style=Book:pixelsize=12,xft:Inconsolata:size=12,9x15
 ! Fix font spacing (should only be necessary if not using font listed above)
 ! URxvt*letterSpace: -3
 
-KTerm*font:                       xft:DejaVuSansMono Nerd Font Mono:style=Book,xft:Inconsolata:size=12,9x15
+KTerm*font:                       xft:DejaVu Sans Mono for Powerline:style=Book:pixelsize=12,xft:Inconsolata:size=12,9x15
 ! XTerm does not use font, it uses faceName and faceSize
 XTerm*faceName: Inconsolata
 XTerm*faceSize: 9

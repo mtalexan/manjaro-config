@@ -29,6 +29,7 @@ default_floating_border normal
 
 # Hide borders (can also be smart_no_gaps to hide only on single window)
 hide_edge_borders smart_no_gaps
+#hide_edge_borders smart
 
 # change borders
 #bindsym $mod+u border none
@@ -40,13 +41,7 @@ bindsym $mod+t exec i3-input -F 'title_format "%s"' -P 'New title: '
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-#font pango:xos4 Terminus bold 9
-#font xft:URWGothic-Book 9
-font FontAwesome 8,pango:monospace 8
-
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
-# text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:DejaVu Sans Mono 8
+font pango:FontAwesome 8,xft:URWGothic-Book 9,pango:DejaVu Sans Mono 8,pango:xos4 Terminus bold 9,pango:monospace 8
 
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -319,7 +314,12 @@ bindsym $mod+Shift+r restart
 # Set shut down, restart and locking features
 bindsym $mod+Shift+e mode "$mode_system"
 
-set $Locker i3lock -d -c $black0 -f
+# set $Locker blurlock
+set $Locker blurlock
+#set $Locker i3lock -d -c 20202F -f
+#set $Locker xscreensaver-command -lock
+#set $Locker light-locker-command --lock
+
 set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
 
 mode "$mode_system" {
@@ -343,7 +343,7 @@ mode "$mode_system" {
     bindsym Escape mode "default"
 }
 
-bindsym $altmod+Ctrl+Delete $Locker
+bindsym $altmod+Ctrl+Delete exec --no-startup-id $Locker
 
 # resize window (you can also use the mouse for that)
 # Copied in "move" with Ctrl key inverted for move vs resize
@@ -547,11 +547,6 @@ bindsym $mod+Ctrl+r mode "move"
 #        bindsym Escape mode "default"
 #}
 
-# Lock screen
-#bindsym $mod+9 exec --no-startup-id blurlock
-#bindsym $mod+9 exec --no-startup-id xscreensaver-command -lock
-#bindsym $mod+9 exec --no-startup-id light-locker-command --lock
-
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id nitrogen --restore; sleep 1; compton -b
@@ -564,8 +559,9 @@ exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb
 exec --no-startup-id start_conky_maia
 # exec --no-startup-id start_conky_green
-#exec --no-startup-id xautolock -time 10 -locker blurlock
-exec --no-startup-id xscreensaver -nosplash
+# Also see /etc/systemd/system/suspend@.service for lock on lid
+exec --no-startup-id xautolock -time 10 -locker blurlock
+#exec --no-startup-id xscreensaver -nosplash
 #exec --no-startup-id light-locker --no-late-locking --lock-on-suspend --lock-on-lid --idle-hint
 exec --no-startup-id "if command -v vmware-user-suid-wrapper &>/dev/null ; then vmware-user-suid-wrapper ; fi"
 exec_always --no-startup-id ff-theme-util
@@ -645,6 +641,25 @@ bar {
 
 # hide/unhide i3status bar
 #bindsym $mod+m bar mode toggle
+# HTML color codes for windows
+## Default colors
+## class                 border  backgr. text    indicator child_border
+#client.focused          #4c7899 #285577 #ffffff #2e9ef4   #285577
+#client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+#client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+#client.urgent           #2f343a #900000 #ffffff #900000   #900000
+#client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+#client.background       #ffffff
+
+## Basic New colors
+## class                 border  backgr. text    indicator child_border
+#client.focused          #4c7899 #285577 #ffffff #f42eb8   #285577
+#client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+#client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+#client.urgent           #2f343a #900000 #ffffff #900000   #900000
+#client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+#client.background       #ffffff
+
 
 # Theme colors
 # class                   border  backgr. text    indic.   child_border

@@ -298,6 +298,8 @@ for_window [class="Steam"] floating enable border pixel 1
 for_window [class="Firefox"] border pixel 1
 for_window [class="Chrome"] border pixel 1
 for_window [instance="(?i)^copyq$" class="(?i)^Copyq$"] floating enable border pixel 1
+for_window [class="Telegram"] floating enable border pixel 1
+for_window [class="Calculator"] floating enable border pixel 1
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
@@ -330,7 +332,7 @@ mode "$mode_system" {
     #bindsym u exec --no-startup-id i3exit switch_user, mode "default"
     bindsym u exec --no-startup-id dm-tool switch-to-greeter, mode "default"
     #bindsym e exec --no-startup-id i3exit logout, mode "default"
-    bindsym e exec --no-startup-id i3msg exit, mode "default"
+    bindsym e exec --no-startup-id i3-msg exit, mode "default"
     #bindsym h exec --no-startup-id i3exit hibernate, mode "default"
     bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
     #bindsym r exec --no-startup-id i3exit reboot, mode "default"
@@ -353,48 +355,48 @@ mode "resize" {
         # Moves when holding Ctrl, fast-changes when holding Ctrl+Shift
 
         # Resize a little, fixed upper-left corner
-        bindsym $ergo_left resize shrink width 10 px or 10 ppt
-        bindsym $ergo_down resize grow height 10 px or 10 ppt
-        bindsym $ergo_up resize shrink height 10 px or 10 ppt
-        bindsym $ergo_right resize grow width 10 px or 10 ppt
+        bindsym $ergo_left resize shrink width 10 px
+        bindsym $ergo_down resize grow height 10 px
+        bindsym $ergo_up resize shrink height 10 px
+        bindsym $ergo_right resize grow width 10 px
 
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+        bindsym Left resize shrink width 10 px
+        bindsym Down resize grow height 10 px
+        bindsym Up resize shrink height 10 px
+        bindsym Right resize grow width 10 px
 
         # Resize fast, fixed upper-left corner
-        bindsym Shift+$ergo_left resize shrink width 40 px or 40 ppt
-        bindsym Shift+$ergo_down resize grow height 40 px or 40 ppt
-        bindsym Shift+$ergo_up resize shrink height 40 px or 40 ppt
-        bindsym Shift+$ergo_right resize grow width 40 px or 40 ppt
+        bindsym Shift+$ergo_left resize shrink width 40 px
+        bindsym Shift+$ergo_down resize grow height 40 px
+        bindsym Shift+$ergo_up resize shrink height 40 px
+        bindsym Shift+$ergo_right resize grow width 40 px
 
-        bindsym Shift+Left resize shrink width 40 px or 40 ppt
-        bindsym Shift+Down resize grow height 40 px or 40 ppt
-        bindsym Shift+Up resize shrink height 40 px or 40 ppt
-        bindsym Shift+Right resize grow width 40 px or 40 ppt
+        bindsym Shift+Left resize shrink width 40 px
+        bindsym Shift+Down resize grow height 40 px
+        bindsym Shift+Up resize shrink height 40 px
+        bindsym Shift+Right resize grow width 40 px
 
         # Move a little, fixed size
-        bindsym Ctrl+$ergo_left move left 10 px or 10 ppt
-        bindsym Ctrl+$ergo_down move down 10 px or 10 ppt
-        bindsym Ctrl+$ergo_up move up 10 px or 10 ppt
-        bindsym Ctrl+$ergo_right move right 10 px or 10 ppt
+        bindsym Ctrl+$ergo_left move left 10 px
+        bindsym Ctrl+$ergo_down move down 10 px
+        bindsym Ctrl+$ergo_up move up 10 px
+        bindsym Ctrl+$ergo_right move right 10 px
 
-        bindsym Ctrl+Left move left 10 px or 10 ppt
-        bindsym Ctrl+Down move down 10 px or 10 ppt
-        bindsym Ctrl+Up move up 10 px or 10 ppt
-        bindsym Ctrl+Right move right 10 px or 10 ppt
+        bindsym Ctrl+Left move left 10 px
+        bindsym Ctrl+Down move down 10 px
+        bindsym Ctrl+Up move up 10 px
+        bindsym Ctrl+Right move right 10 px
 
         # Move a lot, fixed size  (useful in floating mode)
-        bindsym Ctrl+Shift+$ergo_left move left 40 px or 40 ppt
-        bindsym Ctrl+Shift+$ergo_down move down 40 px or 40 ppt
-        bindsym Ctrl+Shift+$ergo_up move up 40 px or 40 ppt
-        bindsym Ctrl+Shift+$ergo_right move right 40 px or 40 ppt
+        bindsym Ctrl+Shift+$ergo_left move left 40 px
+        bindsym Ctrl+Shift+$ergo_down move down 40 px
+        bindsym Ctrl+Shift+$ergo_up move up 40 px
+        bindsym Ctrl+Shift+$ergo_right move right 40 px
 
-        bindsym Ctrl+Shift+Left move left 40 px or 40 ppt
-        bindsym Ctrl+Shift+Down move down 40 px or 40 ppt
-        bindsym Ctrl+Shift+Up move up 40 px or 40 ppt
-        bindsym Ctrl+Shift+Right move right 40 px or 40 ppt
+        bindsym Ctrl+Shift+Left move left 40 px
+        bindsym Ctrl+Shift+Down move down 40 px
+        bindsym Ctrl+Shift+Up move up 40 px
+        bindsym Ctrl+Shift+Right move right 40 px
 
         # tiling layout switching
         bindsym s layout stacking
@@ -440,48 +442,48 @@ mode "move" {
         # Change size when holding Ctrl, fast-changes when holding Ctrl+Shift
 
         # Resize a little, fixed upper-left corner
-        bindsym Ctrl+$ergo_left resize shrink width 10 px or 10 ppt
-        bindsym Ctrl+$ergo_down resize grow height 10 px or 10 ppt
-        bindsym Ctrl+$ergo_up resize shrink height 10 px or 10 ppt
-        bindsym Ctrl+$ergo_right resize grow width 10 px or 10 ppt
+        bindsym Ctrl+$ergo_left resize shrink width 10 px
+        bindsym Ctrl+$ergo_down resize grow height 10 px
+        bindsym Ctrl+$ergo_up resize shrink height 10 px
+        bindsym Ctrl+$ergo_right resize grow width 10 px
 
-        bindsym Ctrl+Left resize shrink width 10 px or 10 ppt
-        bindsym Ctrl+Down resize grow height 10 px or 10 ppt
-        bindsym Ctrl+Up resize shrink height 10 px or 10 ppt
-        bindsym Ctrl+Right resize grow width 10 px or 10 ppt
+        bindsym Ctrl+Left resize shrink width 10 px
+        bindsym Ctrl+Down resize grow height 10 px
+        bindsym Ctrl+Up resize shrink height 10 px
+        bindsym Ctrl+Right resize grow width 10 px
 
         # Resize fast, fixed upper-left corner
-        bindsym Ctrl+Shift+$ergo_left resize shrink width 40 px or 40 ppt
-        bindsym Ctrl+Shift+$ergo_down resize grow height 40 px or 40 ppt
-        bindsym Ctrl+Shift+$ergo_up resize shrink height 40 px or 40 ppt
-        bindsym Ctrl+Shift+$ergo_right resize grow width 40 px or 40 ppt
+        bindsym Ctrl+Shift+$ergo_left resize shrink width 40 px
+        bindsym Ctrl+Shift+$ergo_down resize grow height 40 px
+        bindsym Ctrl+Shift+$ergo_up resize shrink height 40 px
+        bindsym Ctrl+Shift+$ergo_right resize grow width 40 px
 
-        bindsym Ctrl+Shift+Left resize shrink width 40 px or 40 ppt
-        bindsym Ctrl+Shift+Down resize grow height 40 px or 40 ppt
-        bindsym Ctrl+Shift+Up resize shrink height 40 px or 40 ppt
-        bindsym Ctrl+Shift+Right resize grow width 40 px or 40 ppt
+        bindsym Ctrl+Shift+Left resize shrink width 40 px
+        bindsym Ctrl+Shift+Down resize grow height 40 px
+        bindsym Ctrl+Shift+Up resize shrink height 40 px
+        bindsym Ctrl+Shift+Right resize grow width 40 px
 
         # Move a little, fixed size
-        bindsym $ergo_left move left 10 px or 10 ppt
-        bindsym $ergo_down move down 10 px or 10 ppt
-        bindsym $ergo_up move up 10 px or 10 ppt
-        bindsym $ergo_right move right 10 px or 10 ppt
+        bindsym $ergo_left move left 10 px
+        bindsym $ergo_down move down 10 px
+        bindsym $ergo_up move up 10 px
+        bindsym $ergo_right move right 10 px
 
-        bindsym Left move left 10 px or 10 ppt
-        bindsym Down move down 10 px or 10 ppt
-        bindsym Up move up 10 px or 10 ppt
-        bindsym Right move right 10 px or 10 ppt
+        bindsym Left move left 10 px
+        bindsym Down move down 10 px
+        bindsym Up move up 10 px
+        bindsym Right move right 10 px
 
         # Move a lot, fixed size (useful in floating mode)
-        bindsym Shift+$ergo_left move left 40 px or 40 ppt
-        bindsym Shift+$ergo_down move down 40 px or 40 ppt
-        bindsym Shift+$ergo_up move up 40 px or 40 ppt
-        bindsym Shift+$ergo_right move right 40 px or 40 ppt
+        bindsym Shift+$ergo_left move left 40 px
+        bindsym Shift+$ergo_down move down 40 px
+        bindsym Shift+$ergo_up move up 40 px
+        bindsym Shift+$ergo_right move right 40 px
 
-        bindsym Shift+Left move left 40 px or 40 ppt
-        bindsym Shift+Down move down 40 px or 40 ppt
-        bindsym Shift+Up move up 40 px or 40 ppt
-        bindsym Shift+Right move right 40 px or 40 ppt
+        bindsym Shift+Left move left 40 px
+        bindsym Shift+Down move down 40 px
+        bindsym Shift+Up move up 40 px
+        bindsym Shift+Right move right 40 px
 
         # tiling layout switching
         bindsym s layout stacking
@@ -537,10 +539,10 @@ bindsym $mod+Ctrl+r mode "move"
 #        bindsym semicolon resize grow width 5 px or 5 ppt
 #
 #        # same bindings, but for the arrow keys
-#        bindsym Left resize shrink width 10 px or 10 ppt
-#        bindsym Down resize grow height 10 px or 10 ppt
-#        bindsym Up resize shrink height 10 px or 10 ppt
-#        bindsym Right resize grow width 10 px or 10 ppt
+#        bindsym Left resize shrink width 10 px
+#        bindsym Down resize grow height 10 px
+#        bindsym Up resize shrink height 10 px
+#        bindsym Right resize grow width 10 px
 #
 #        # exit resize mode: Enter or Escape
 #        bindsym Return mode "default"

@@ -55,9 +55,9 @@ font pango:FontAwesome 8,xft:URWGothic-Book 9,pango:DejaVu Sans Mono 8,pango:xos
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec terminal
-bindsym $mod+F1 exec terminal
-bindsym $mod+Shift+F1 exec --no-startup-id ~/manjaro-config/exec-on-new-workspace.sh terminal
+bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+F1 exec i3-sensible-terminal
+bindsym $mod+Shift+F1 exec --no-startup-id ~/manjaro-config/exec-on-new-workspace.sh i3-sensible-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -74,7 +74,7 @@ bindsym $mod+z exec --no-startup-id morc_menu
 ################################################################################################
 
 exec --no-startup-id volumeicon
-bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
+bindsym $mod+Ctrl+m exec i3-sensible-terminal -e 'alsamixer'
 #exec --no-startup-id pulseaudio
 #exec --no-startup-id pa-applet
 #bindsym $mod+Ctrl+m exec pavucontrol
@@ -86,8 +86,8 @@ bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
 # bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send --urgency=normal --expire-time=1000 'brightness down'"
 
 # Start Applications
-bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
-bindsym $mod+Shift+Ctrl+b exec terminal -e 'bmenu'
+bindsym $mod+Ctrl+b exec i3-sensible-terminal -e 'bmenu'
+bindsym $mod+Shift+Ctrl+b exec i3-sensible-terminal -e 'bmenu'
 #bindsym $mod+F2 exec --no-startup-id ~/manjaro-config/exec-on-new-workspace.sh firefox
 bindsym $mod+F2 exec firefox
 bindsym $mod+Shift+F2 exec firefox
@@ -102,9 +102,11 @@ bindsym $mod+F4 exec pcmanfm
 bindsym $mod+Shift+F4 exec pcmanfm
 # bindsym $mod+F3 exec ranger
 # bindsym $mod+Shift+F3 exec ranger
-#bindsym $mod+F5 exec --no-startup-id ~/manjaro-config/exec-on-new-workspace.sh terminal -e 'mocp'
-bindsym $mod+F5 exec terminal -e 'mocp'
-bindsym $mod+Shift+F5 exec terminal -e 'mocp'
+#bindsym $mod+F5 exec --no-startup-id ~/manjaro-config/exec-on-new-workspace.sh i3-sensible-terminal -e 'mocp'
+bindsym $mod+F5 exec i3-sensible-terminal -e 'mocp'
+bindsym $mod+Shift+F5 exec i3-sensible-terminal -e 'mocp'
+
+bindym $mod+F12 exec i3-sensible-terminal -hold -e 'expressvpn status'; floating enable border pixel 1 resize set width 750 px height 500 px move position center; move scratchpad
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send --urgency=normal --expire-time=3000 'restart dunst'"
 bindsym $altmod+Print --release exec --no-startup-id flameshot gui
 bindsym Print exec --no-startup-id i3-scrot
@@ -300,6 +302,7 @@ for_window [class="Chrome"] border pixel 1
 for_window [instance="(?i)^copyq$" class="(?i)^Copyq$"] floating enable border pixel 1
 for_window [class="Telegram"] floating enable border pixel 1
 for_window [class="Calculator"] floating enable border pixel 1
+for_window [class="usbguard-applet-qt"] floating enable border pixel 1 resize set width 1100 px height 650 px move position center
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
@@ -551,6 +554,7 @@ bindsym $mod+Ctrl+r mode "move"
 
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec usbguard-applet-qt
 exec --no-startup-id nitrogen --restore; sleep 1; compton -b
 #exec --no-startup-id manjaro-hello
 exec --no-startup-id nm-applet

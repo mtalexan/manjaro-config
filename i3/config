@@ -15,7 +15,10 @@ set $ergo_right l
 # quickswitch-i3 command with path, arguments should be appended
 set $quickswitch ~/.i3/quickswitch-for-i3/quickswitch.py
 # i3-easyfocus command with path, arguments or piping for operations on the selected window should be appended
-set $easyfocus "~/.i3/i3-easyfocus/i3-easyfocus --font terminus-pt154-bold-32 --all --keys avy  --color-urgent-bg 4C789A --color-urgent-fg FFFFFF --color-focused-bg 4C789A --color-focused-fg FFFFFF --color-unfocused-bg 4C789A --color-unfocused-fg FFFFFF"
+# Colors:
+#  BG = {19532/65536=76/256=0x4C, 30840/65536=120/256=0x78, 39321/65536=154/256=0x9A} = 4C789A,
+#  FG = {65535=255=FF, 65535=255=FF, 65535=255=FF} = FFFFFF
+set $easyfocus "~/.i3/i3-easyfocus/i3-easyfocus --font terminus-pt154-bold-32 --all --keys avy --color-urgent-bg 4C789A --color-urgent-fg FFFFFF --color-focused-bg 4C789A --color-focused-fg FFFFFF --color-unfocused-bg 4C789A --color-unfocused-fg FFFFFF"
 
 # set default desktop layout (default is tiling)
 # workspace_layout tabbed <stacking|tabbed>
@@ -37,7 +40,8 @@ hide_edge_borders smart_no_gaps
 bindsym $mod+Shift+t border toggle
 # prompt for input to change the title
 bindsym $mod+t exec i3-input -F 'title_format "%s"' -P 'New title: '
-
+# prompt for a mark to toggle on the current window
+bindsym $mod+m exec i3-input -F 'mark --add --toggle "%s"' -P 'Toggle Mark: '
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -56,8 +60,8 @@ floating_modifier $mod
 
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+F1 exec i3-sensible-terminal
-bindsym $mod+Shift+F1 exec $quickswitch --empty; exec i3-sensible-terminal
+#bindsym $mod+F1 exec i3-sensible-terminal
+#bindsym $mod+Shift+F1 exec $quickswitch --empty; exec i3-sensible-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -93,6 +97,9 @@ bindsym $mod+Ctrl+m exec i3-sensible-terminal -e 'alsamixer'
 # Start Applications
 bindsym $mod+Ctrl+b exec i3-sensible-terminal -e 'bmenu'
 bindsym $mod+Shift+Ctrl+b exec i3-sensible-terminal -e 'bmenu'
+# medium size, centered floating terminal
+bindsym $mod+F1 exec i3-sensible-terminal; floating enable; border pixel 1; resize set width 750 px height 500 px; move position center
+bindsym $mod+Shift+F1 exec $quickswitch --empty; exec i3-sensible-terminal; floating enable; border pixel 1; resize set width 750 px height 500 px; move position center
 bindsym $mod+F2 exec firefox
 bindsym $mod+Shift+F2 exec $quickswitch --empty; exec firefox
 #bindsym $mod+F3 exec  google-chrome-stable
@@ -106,8 +113,10 @@ bindsym $mod+Shift+F4 exec $quickswitch --empty; exec pcmanfm
 # bindsym $mod+Shift+F3 exec $quickswitch --empty; exec ranger
 bindsym $mod+F5 exec i3-sensible-terminal -e 'mocp'
 bindsym $mod+Shift+F5 exec $quickswitch --empty; exec i3-sensible-terminal -e 'mocp'
+# centered floating terminal window listing expressvpn status
+bindsym $mod+F12 exec i3-sensible-terminal -hold -e 'expressvpn status'; floating enable; border pixel 1; resize set width 750 px height 500 px; move position center
+bindsym $mod+Shift+F12 exec $quickswitch --empty; exec i3-sensible-terminal -hold -e 'expressvpn status'; floating enable; border pixel 1; resize set width 750 px height 500 px; move position center
 
-bindym $mod+F12 exec i3-sensible-terminal -hold -e 'expressvpn status'; floating enable border pixel 1 resize set width 750 px height 500 px move position center; move scratchpad
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send --urgency=normal --expire-time=3000 'restart dunst'"
 bindsym $altmod+Print --release exec --no-startup-id flameshot gui
 bindsym Print exec --no-startup-id i3-scrot

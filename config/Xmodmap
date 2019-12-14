@@ -1,0 +1,4 @@
+keysym XF86Back = Page_Up
+keysym XF86Forward = Page_Down
+keysym XF86AudioNext = End
+keysym XF86AudioPrev = Home

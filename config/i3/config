@@ -102,10 +102,10 @@ bindsym $mod+F1 exec i3-sensible-terminal; floating enable; border pixel 1; resi
 bindsym $mod+Shift+F1 exec $quickswitch --empty; exec i3-sensible-terminal; floating enable; border pixel 1; resize set width 750 px height 500 px; move position center
 bindsym $mod+F2 exec firefox
 bindsym $mod+Shift+F2 exec $quickswitch --empty; exec firefox
-#bindsym $mod+F3 exec  google-chrome-stable
-#bindsym $mod+Shift+F3 exec $quickswitch --empty; exec google-chrome-stable
-bindsym $mod+F3 exec  chromium
-bindsym $mod+Shift+F3 exec $quickswitch --empty; exec chromium
+bindsym $mod+F3 exec  google-chrome-stable
+bindsym $mod+Shift+F3 exec $quickswitch --empty; exec google-chrome-stable
+#bindsym $mod+F3 exec  chromium
+#bindsym $mod+Shift+F3 exec $quickswitch --empty; exec chromium
 bindsym $mod+F4 exec pcmanfm
 #bindsym $mod+Shift+F4 exec gksu pcmanfm
 bindsym $mod+Shift+F4 exec $quickswitch --empty; exec pcmanfm
@@ -578,7 +578,9 @@ exec --no-startup-id blueman-applet
 exec --no-startup-id start_conky_maia
 # exec --no-startup-id start_conky_green
 # Also see /etc/systemd/system/suspend@.service for lock on lid
-exec --no-startup-id xautolock -time 10 -locker blurlock
+# On idle detection, interrupted by audio, 10 minute timer save current backlight and set to 10%.  Restore if interrupted.
+# 10 more seconds later, restore backlight and blurlock
+exec --no-startup-id xidlehook --not-when-audio --timer 600 'xbacklight -get > /run/lock/backlight-start ; xbacklight -set 10 -time 100' 'xbacklight -set $(if [ -e /run/lock/backlight-start ] ; then cat /run/lock/backlight-start; else echo 100; fi) -time 0; rm -f /run/lock/backlight-start'  --timer 10 'xbacklight -set $(if [ -e /run/lock/backlight-start ] ; then cat /run/lock/backlight-start; else echo 100; fi) -time 0; rm -f /run/lock/backlight-start; blurlock' ''
 #exec --no-startup-id xscreensaver -nosplash
 #exec --no-startup-id light-locker --no-late-locking --lock-on-suspend --lock-on-lid --idle-hint
 # Needed for window resizing of VMWare to work

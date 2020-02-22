@@ -90,6 +90,14 @@ bindsym $mod+Ctrl+m exec i3-sensible-terminal -e 'alsamixer'
 
 ################################################################################################
 
+#set $volume_up "amixer -D pulse sset Master 5%+"
+#set $volume_down "amixer -D pulse sset Master 5%-"
+#set $volume_mute_toggle "amixer -D pulse set Master +1 toggle"
+
+#bindsym XF86AudioRaiseVolume exec $volume_up
+#bindsym XF86AudioLowerVolume exec $volume_down
+#bindsym XF86AudioMute exec $volume_mute_toggle
+
 # Screen brightness controls
 # bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send --urgency=normal --expire-time=1000 'brightness up'"
 # bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send --urgency=normal --expire-time=1000 'brightness down'"
@@ -109,8 +117,6 @@ bindsym $mod+Shift+F3 exec $quickswitch --empty; exec google-chrome-stable
 bindsym $mod+F4 exec pcmanfm
 #bindsym $mod+Shift+F4 exec gksu pcmanfm
 bindsym $mod+Shift+F4 exec $quickswitch --empty; exec pcmanfm
-# bindsym $mod+F3 exec ranger
-# bindsym $mod+Shift+F3 exec $quickswitch --empty; exec ranger
 bindsym $mod+F5 exec i3-sensible-terminal -e 'mocp'
 bindsym $mod+Shift+F5 exec $quickswitch --empty; exec i3-sensible-terminal -e 'mocp'
 # centered floating terminal window listing expressvpn status
@@ -119,6 +125,7 @@ bindsym $mod+Shift+F12 exec $quickswitch --empty; exec i3-sensible-terminal -hol
 
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send --urgency=normal --expire-time=3000 'restart dunst'"
 bindsym $altmod+Print --release exec --no-startup-id flameshot gui
+bindsym $mod+Delete --release exec --no-startup-id flameshot gui
 bindsym Print exec --no-startup-id i3-scrot
 bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
 bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
@@ -170,6 +177,18 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
+# move the entire workspace to another monitor
+bindsym $mod+Ctrl+$ergo_left move workspace to output left
+bindsym $mod+Ctrl+$ergo_down move workspace to output down
+bindsym $mod+Ctrl+$ergo_up move workspace to output up
+bindsym $mod+Ctrl+$ergo_right move workspace to output right
+
+bindsym $mod+Ctrl+Left move workspace to output left
+bindsym $mod+Ctrl+Down move workspace to output down
+bindsym $mod+Ctrl+Up move workspace to output up
+bindsym $mod+Ctrl+Right move workspace to output right
+
+
 # workspace back and forth (with/without active container)
 workspace_auto_back_and_forth yes
 bindsym $mod+b workspace back_and_forth
@@ -214,8 +233,8 @@ bindsym $mod+minus scratchpad show
 bindsym $mod+Ctrl+minus exec $quickswitch --scratchpad --prompt
 
 #navigate workspaces next / previous
-bindsym $mod+Ctrl+Right workspace next
-bindsym $mod+Ctrl+Left workspace prev
+#bindsym $mod+Ctrl+Right workspace next
+#bindsym $mod+Ctrl+Left workspace prev
 
 # Workspace names
 # to display names or symbols instead of plain workspace numbers you can use
@@ -245,6 +264,8 @@ bindsym $mod+9 workspace $ws9
 bindsym $mod+0 workspace $ws10
 # picked from a prompt
 bindsym $mod+equal exec $quickswitch --workspaces --prompt
+# next empty workspace
+bindsym $mod+BackSpace exec $quickswitch --empty
 
 # Move focused container to workspace
 bindsym $mod+Ctrl+1 move container to workspace $ws1
@@ -259,9 +280,11 @@ bindsym $mod+Ctrl+9 move container to workspace $ws9
 bindsym $mod+Ctrl+0 move container to workspace $ws10
 # entered manually at a prompt
 # double backslash required for how the parser works to escape the embedded doublequotes in the command
-bindsym $mod+Ctrl+equal exec "i3-input -F 'move container to workspace \\"%s\\"' -P \\"Move to workspace: \\""
+bindsym $mod+Ctrl+equal exec --no-startup-id "i3-input -F 'move container to workspace \\"%s\\"' -P \\"Move to workspace: \\""
 # quickswitch only works with workspaces that are already used, so it can't be used to send to an
 # empty workspace from the prompt
+# Move to the next empty workspace
+bindsym $mod+Ctrl+BackSpace exec $quickswitch --journey --empty
 
 # Move to workspace with focused container
 bindsym $mod+Ctrl+Shift+1 move container to workspace $ws1; workspace $ws1
@@ -280,12 +303,18 @@ bindsym $mod+Ctrl+Shift+0 move container to workspace $ws10; workspace $ws10
 bindsym $mod+Ctrl+Shift+equal exec --no-startup-id "i3-input -F 'move container to workspace \\"%s\\"; workspace \\"%s\\"' -P \\"Move to workspace: \\""
 # quickswitch only works with workspaces that are already used, so it can't be used to send to an
 # empty workspace from the prompt
+# Move to the next empty workspace
+bindsym $mod+Ctrl+Shift+BackSpace exec $quickswitch --journey --follow --empty
+
 
 # Open applications on specific workspaces
 # assign [class="Thunderbird"] $ws1
 # assign [class="Pale moon"] $ws2
 # assign [class="Pcmanfm"] $ws3
 # assign [class="Skype"] $ws5
+
+# Get info about windows by running "xdotool selectwindow getwindowname", then clicking on the window.
+# This will print the name of the window that can be used in the filters below.
 
 # floating dialogs
 for_window [window_role="pop-up"] floating enable
@@ -325,6 +354,12 @@ for_window [instance="(?i)^copyq$" class="(?i)^Copyq$"] floating enable border p
 for_window [class="Telegram"] floating enable border pixel 1
 for_window [class="Calculator"] floating enable border pixel 1
 for_window [class="usbguard-applet-qt"] floating enable border pixel 1 resize set width 1100 px height 650 px move position center
+for_window [title="(?i)^zoom"] floating enable border pixel 1
+for_window [title="^Network Connections$"] floating enable border pixel 1
+for_window [title="^Software & Updates$"] floating enable border pixel 1
+for_window [title="^Citrix Workspace$"] floating enable border pixel 1
+for_window [title="^Microsoft Teams Notification$"] floating enable border pixel 1
+
 
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
@@ -447,7 +482,8 @@ mode "resize" {
         bindsym 9 move container to workspace 9; mode "default"
         bindsym 0 move container to workspace 10; mode "default"
         # move to manually entered workspace and auto-exit
-        bindsym $mod+Ctrl+equal exec "i3-input -F 'move container to workspace \\"%s\\"; mode \\"default\\"' -P \\"Move to workspace: \\""
+        bindsym $mod+Ctrl+equal exec --no-startup-id "i3-input -F 'move container to workspace \\"%s\\"; mode \\"default\\"' -P \\"Move to workspace: \\""
+        bindsym Ctrl+BackSpace exec $quickswitch --journey --empty; mode "default"
 
         # move focused container to workspace and follow it
 		bindsym Shift+1 move container to workspace 1; workspace 1
@@ -462,6 +498,7 @@ mode "resize" {
 		bindsym Shift+0 move container to workspace 10; workspace 10
         # prompt for workspace to move to and follow it
         bindsym Shift+equal exec --no-startup-id "i3-input -F 'move container to workspace \\"%s\\"; workspace \\"%s\\"' -P \\"Move to workspace: \\""
+        bindsym Shift+BackSpace exec $quickswitch --journey --empty --follow
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -538,7 +575,8 @@ mode "move" {
         bindsym 9 move container to workspace 9; mode "default"
         bindsym 0 move container to workspace 10; mode "default"
         # move to manually entered workspace and auto-exit
-        bindsym $mod+Ctrl+equal exec "i3-input -F 'move container to workspace \\"%s\\"; mode \\"default\\"' -P \\"Move to workspace: \\""
+        bindsym Ctrl+equal exec --no-startup-id "i3-input -F 'move container to workspace \\"%s\\"; mode \\"default\\"' -P \\"Move to workspace: \\""
+        bindsym Ctrl+BackSpace exec $quickswitch --journey --empty; mode "default"
 
         # move focused container to workspace and follow it
 		bindsym Shift+1 move container to workspace 1; workspace 1
@@ -553,6 +591,7 @@ mode "move" {
 		bindsym Shift+0 move container to workspace 10; workspace 10
         # prompt for workspace to move to and follow it
         bindsym Shift+equal exec --no-startup-id "i3-input -F 'move container to workspace \\"%s\\"; workspace \\"%s\\"' -P \\"Move to workspace: \\""
+        bindsym Shift+BackSpace exec $quickswitch --journey --empty --follow
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -566,13 +605,13 @@ bindsym $mod+Ctrl+r mode "move"
 # Nautilus options to start without opening a window or managing the desktop don't work
 #exec --no-startup-id "nautilus --no-default-window --no-desktop"
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec usbguard-applet-qt
+#exec usbguard-applet-qt
 exec --no-startup-id nitrogen --restore; sleep 1; compton -b
 #exec --no-startup-id manjaro-hello
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
-exec --no-startup-id copyq
+exec --no-startup-id copyq enable
 exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb
 exec --no-startup-id start_conky_maia
@@ -589,6 +628,7 @@ exec --no-startup-id "if command -v vmware-user-suid-wrapper &>/dev/null ; then 
 exec_always --no-startup-id "if [ -e ~/.touchpad_config.sh ] ; then ~/.touchpad_config.sh ; fi"
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
+exec --no-startup-id /usr/bin/alternating_layouts.py
 
 # Color palette used for the terminal ( ~/.Xresources file )
 # Colors are gathered based on the documentation:

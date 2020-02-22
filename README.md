@@ -11,3 +11,6 @@ source ${MY_TOOLS_DIR}/all.incl
 ```
 
 Also remove "use_color" from the list of variables being unset after the PS1 pompt is set so the proper prompt will be used.
+
+# CUDA Tools
+Install the optimus tools.  Then call the enableCUDA and disableCUDA.

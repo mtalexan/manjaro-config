@@ -8,6 +8,8 @@ chromium or google-chrome-stable
 pcmanfm
 expressvpn
 flameshot
+dunst
+morc
 dunstmerge (for the dependencies)
 i3-scrot
 xorg-xkill
